@@ -50,12 +50,6 @@ cd ballot
 python manage.py migrate
 ```
 
-#### Carga de datos inicial
-
-```bash
-python manage.py load_test_data
-```
-
 #### Crear un superuser
 
 ```bash
