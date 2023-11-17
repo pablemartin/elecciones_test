@@ -3,9 +3,8 @@ import pytest
 from voting.utils import has_voted, has_voted_percentage
 from .factories import VoterFactory
 
+
 # has_voted tests
-
-
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'has_voted_value, expected_result',
