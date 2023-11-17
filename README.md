@@ -8,8 +8,8 @@
   - **has_voted_percentage**
 - Contexto:
   - Este sistema contempla la votaciones para **balotaje**
-  - El sitio de ejemplo de votaciones generales: https://resultados.gob.ar/elecciones/1/0/1/-1/-1#agrupaciones
-  - Reglas que podrias tener que utilizar: https://www.argentina.gob.ar/dine/clases-de-votos
+  - El sitio de ejemplo de votaciones generales: [elecciones 2023](https://resultados.gob.ar/elecciones/1/0/1/-1/-1#agrupaciones)
+  - Reglas que podrias tener que utilizar: [clases-de-votos](https://www.argentina.gob.ar/dine/clases-de-votos)
 - Requisitos:
   - Pagina para votación
     - Se ingresa el documento y en segun si ya voto o no:
@@ -26,46 +26,9 @@
 
 ## Requisitos previos
 
-### Docker
+### Python
 
-Tener instalado docker y docker-compose ver: [documentación oficial](https://www.digitalocean.com/community/tutorials/como-instalar-docker-compose-en-ubuntu-18-04-es)
-
-### Resumen
-
-- Para configurar localmente el proyecto, utilizamos Docker (aunque podes no usarlo).
-
-- Hay un **docker-compose.yml** que tiene, la base de datos (postgres).
-
-- En la configuración local con Docker, se disponibiliza la BD.
-
-- Siguiendo los pasos que se listan a continuación, tendremos disponibles los siguientes contenedores:
-  - **DB**: Instancia de BD principal.
-
-## Entorno de desarrollo
-
-Configurar variables de entorno _(modificar los valores si es necesario)._
-
-```bash
-cp .env.dist .env
-```
-
-Crear el entorno virtual e instalar dependencias:
-
-### Prerequisito
-
-- Tener instalado las librerias de postgres y la base de datos corriendo (ya sea en el entorno de docker-compose o local)
-
-#### Ubuntu
-
-```bash
-sudo apt install libpq-dev
-```
-
-#### Manjaro
-
-```bash
-sudo pacman -S postgresql-libs
-```
+Version 3.11
 
 #### Instalar dependencias de python
 
@@ -79,16 +42,10 @@ poetry install
 poetry shell
 ```
 
-#### Levantar contenedores
-
-```bash
-docker-compose up -d
-```
-
 #### Migrations
 
 ```bash
-cd src
+cd ballot
 
 python manage.py migrate
 ```
@@ -119,3 +76,19 @@ python manage.py runserver
 - flake8
 - pre-commit
 - pytest
+
+### pre-commit
+
+#### Instalar pre-commit
+
+```bash
+pre-commit install
+```
+
+## Entorno de testing
+
+### Ejecutar los tests
+
+```bash
+pytest ballot
+```
