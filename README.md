@@ -7,19 +7,19 @@
   - **has_voted**
   - **has_voted_percentage**
 - Contexto:
-  - Este sistema contempla la votaciones para **balotaje**
+  - Este sistema contempla la votación para **balotaje**
   - El sitio de ejemplo de votaciones generales: https://resultados.gob.ar/elecciones/1/0/1/-1/-1#agrupaciones
-  - Reglas que podrias tener que utilizar: https://www.argentina.gob.ar/dine/clases-de-votos
+  - Reglas que podrías tener que utilizar: https://www.argentina.gob.ar/dine/clases-de-votos
 - Requisitos:
-  - Pagina para votación
-    - Se ingresa el documento y en segun si ya voto o no:
+  - Página para votación
+    - Se ingresa el documento y en según si ya voto o no:
       - si no voto, puede votar las opciones posibles
       - si ya voto, no puede votar
-  - Pagina adminsitracion (con permiso) para realizar el cierre de la votación
-    - Boton de cierre
-    - Confirmacion
+  - Página administración (con permiso) para realizar el cierre de la votación
+    - Botón de cierre
+    - Confirmación
     - Muestra de resultados y ganador
-  - Pagina de resultados (publica)
+  - Página de resultados (pública)
     - en caso de no estar cerrada la votación, muestra el % de votantes que ya votaron y el total de votantes
     - en caso de ya cerrada la votación, muestra los resultados y ganador
   - **Se espera poder tener la información suficiente para en caso de necesitarse se pueda obtener el % de votos a favor de cada partido en determinada zona**
@@ -53,7 +53,7 @@ Crear el entorno virtual e instalar dependencias:
 
 ### Prerequisito
 
-- Tener instalado las librerias de postgres y la base de datos corriendo (ya sea en el entorno de docker-compose o local)
+- Tener instalado las librerías de postgres y la base de datos corriendo (ya sea en el entorno de docker-compose o local)
 
 #### Ubuntu
 
