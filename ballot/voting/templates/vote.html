@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="{% url 'voting:setvote' %}" method="post">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col">
+                <h5>{{ voter.first_name }}</h5>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            {% for party in parties %}
+                <div class="col">
+                    <div class="form-check">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <label class="form-check-label" for="vote{{ party.party_number }}">
+                                    <h5 class="card-title">
+                                        <input class="form-check-input" type="radio" name="vote" id="vote{{ party.party_number }}" value="{{ party.party_number }}">
+                                        <h5>{{ party.slogan }} - {{ party.party_name }}</h5>
+                                        <h3>{{ party.president }}</h3>
+                                        <h3>{{ party.vice_president }}</h3>
+                                    </h5>
+                                </label>
+                            </div>
+                        </div>
+                    </div>  
+                </div>    
+            {% endfor %}
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <input class="form-check-input" type="radio" name="vote" id="votewhite" value="white">
+                            <label class="form-check-label" for="votewhite">
+                                Voto Blanco
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <input class="form-check-input" type="radio" name="vote" id="votenull" value="null">
+                            <label class="form-check-label" for="votenull">
+                                Voto Nulo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <input type="hidden" value="{{ voter.dni }}" name="dni">
+
+        <button type="submit" class="btn btn-primary">Ingresar sobre</button>
+    </form>
+{% endblock %}

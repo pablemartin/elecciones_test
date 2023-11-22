@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if voter_exists %}
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-primary" role="alert">
+                    Ya votaste
+                </div>                  
+            </div>
+        </div>
+    {% endif %} 
+
+    <div class="row">
+        <div class="col">
+            <form action="{% url 'voting:vote' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="dni" class="form-label">
+                        <span>DNI</span>
+                    </label>
+                    <input type="number" name="dni" class="form-control" id="dni"/>
+                </div>
+
+                <hr>
+        
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+                <a href="/resultados" class="btn btn-info">Resultados</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

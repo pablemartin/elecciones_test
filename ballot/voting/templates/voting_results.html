@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <p>Resultados</p>
+
+  {% if voting.is_closed %}
+
+    <div class="row">
+      <div class="col">
+        <h1>Ganador {{ total_results.winner }} </h1>
+      </div>
+    </div>
+
+    <div class="row">
+      {% for party, value in total_results.parties_results.items %}
+          {% for party_model in political_parties %}
+            {% if party_model.party_name == party %}
+              <div class="col">  
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <h5>{{ party_model.slogan }} - {{ party_model.party_name }}</h5>
+                            <h3>{{ party_model.president }}</h3>
+                            <h3>{{ party_model.vice_president }}</h3>
+                            <h3>{{ value }} %</h3>
+                        </h5>
+                    </div>
+                </div>
+              </div>    
+            {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col">  
+          <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                  <h5 class="card-title">
+                      <h5>Votos en blanco {{ total_results.whites }} %</h5>
+                  </h5>
+              </div>
+          </div>
+        </div>    
+    </div>
+
+    <div class="row">
+        <div class="col">  
+          <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                  <h5 class="card-title">
+                      <h5>Votos nulos {{ total_results.nulls }} %</h5>
+                  </h5>
+              </div>
+          </div>
+        </div>    
+    </div>
+  {% else %}
+    <!-- Porcentaje de votantes -->
+      <div class="row">
+          <div class="col">  
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <h5>Han votado {{ total_results.voted_percentage }} %</h5>
+                    </h5>
+                </div>
+            </div>
+          </div>    
+      </div>
+      <div class="row">
+        <div class="col">  
+          <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                  <h5 class="card-title">
+                      <h5>Total Votantes {{ total_results.total_voters }}</h5>
+                  </h5>
+              </div>
+          </div>
+        </div>    
+    </div>
+  {% endif %}
+      
+{% endblock %}
