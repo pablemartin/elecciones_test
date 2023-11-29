@@ -53,8 +53,10 @@ def get_party_percentage(party):
 def get_white_percentage():
     total_votes = Vote.objects.all().count()
     white_votes = Vote.objects.filter(white=True).count()
-    if white_votes == 0:
+
+    if total_votes == 0:
         return 0
+
     return round((white_votes / total_votes) * 100, 2)
 
 
@@ -62,7 +64,7 @@ def get_null_percentage():
     total_votes = Vote.objects.all().count()
     null_votes = Vote.objects.filter(null=True).count()
 
-    if null_votes == 0:
+    if total_votes == 0:
         return 0
 
     return round((null_votes / total_votes) * 100, 2)
