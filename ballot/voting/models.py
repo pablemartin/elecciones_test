@@ -32,7 +32,9 @@ class PoliticalParty(models.Model):
 
 
 class Vote(models.Model):
-    party_number = models.PositiveIntegerField(default=False)
+    political_party = models.ForeignKey(
+        PoliticalParty, on_delete=models.CASCADE, default=None, null=True, blank=True
+    )
     white = models.BooleanField(default=False)
     null = models.BooleanField(default=False)
 

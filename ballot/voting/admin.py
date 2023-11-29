@@ -53,6 +53,6 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 @admin.register(Vote)
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ('party_number', 'white', 'null')
-    list_filter = ('party_number', 'white', 'null')
-    search_fields = ('party_number',)
+    list_display = ('political_party', 'white', 'null')
+    list_filter = ('political_party', 'white', 'null')
+    search_fields = ('political_party',)
