@@ -19,9 +19,8 @@ class VotingAdmin(admin.ModelAdmin):
         return my_urls + urls
 
     def cierre(self, request):
-        voting_model = Voting.objects.get()
-        voting_model.is_closed = True
-        voting_model.save()
+        Voting.objects.update(is_closed=True)
+
         return redirect('/admin/voting/voting')
 
     def changelist_view(self, request, extra_context=None):
