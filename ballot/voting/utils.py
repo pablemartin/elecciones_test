@@ -20,7 +20,9 @@ def has_voted_percentage():
 
 
 def get_voting():
-    return Voting.objects.get_or_create()[0]
+    voting, _ = Voting.objects.get_or_create()
+
+    return voting
 
 
 def set_vote(vote):

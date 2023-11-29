@@ -1,4 +1,5 @@
 import random
+
 from voting.tests.factories import VoterFactory
 
 possible_dnis = range(100000, 10000000 + 1)
