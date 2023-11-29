@@ -6,42 +6,45 @@ from django.shortcuts import render, redirect
 from django.urls import path
 from django.http import HttpResponseForbidden, HttpResponse
 from .models import Voter, PoliticalParty, Vote, Voting
-from .utils import get_party_percentage, get_white_percentage, get_null_percentage, get_all_results, get_voting
+from .utils import (
+    get_party_percentage,
+    get_white_percentage,
+    get_null_percentage,
+    get_all_results,
+    get_voting,
+)
 
 admin.site.register(Vote)
 
 admin.site.site_header = 'Votacion'
 
+
 @admin.register(Voting, site=admin.site)
 class VotingAdmin(admin.ModelAdmin):
-
     def get_urls(self):
         urls = super().get_urls()
-        my_urls = [path("cierre/",  self.cierre)]
+        my_urls = [path('cierre/', self.cierre)]
         return my_urls + urls
 
     def cierre(self, request):
         voting_model = Voting.objects.get()
         voting_model.is_closed = True
         voting_model.save()
-        return redirect("/admin/voting/voting")
+        return redirect('/admin/voting/voting')
 
     def changelist_view(self, request, extra_context=None):
         # Genera la votacion si no existe
         get_voting()
-        
+
         parties_models = PoliticalParty.objects.all()
         voting_model = Voting.objects.get()
         total_results = get_all_results()
 
         return super().changelist_view(
             request,
-            {
-                "voting": voting_model,
-                "parties": parties_models,
-                "total_results": total_results
-            }
+            {'voting': voting_model, 'parties': parties_models, 'total_results': total_results},
         )
+
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):

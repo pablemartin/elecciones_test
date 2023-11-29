@@ -30,10 +30,12 @@ class PoliticalParty(models.Model):
         verbose_name = 'Political Party'
         verbose_name_plural = 'Political Parties'
 
+
 class Vote(models.Model):
     party_number = models.PositiveIntegerField(default=False)
     white = models.BooleanField(default=False)
     null = models.BooleanField(default=False)
+
 
 class Voting(models.Model):
     is_closed = models.BooleanField(default=False)
