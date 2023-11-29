@@ -1,18 +1,9 @@
-from django import forms
-from django.contrib import admin, messages
-from django.contrib.admin import AdminSite
-from django.template.response import TemplateResponse
-from django.shortcuts import render, redirect
+from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path
-from django.http import HttpResponseForbidden, HttpResponse
-from .models import Voter, PoliticalParty, Vote, Voting
-from .utils import (
-    get_party_percentage,
-    get_white_percentage,
-    get_null_percentage,
-    get_all_results,
-    get_voting,
-)
+
+from .models import PoliticalParty, Voter, Vote, Voting
+from .utils import get_all_results, get_voting
 
 admin.site.register(Vote)
 

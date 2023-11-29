@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate
-from .models import Voter, Vote, PoliticalParty, Voting
-from .utils import has_voted, has_voted_percentage, get_voting, set_vote, get_all_results
-import datetime
+
+from .models import Voter, PoliticalParty
+from .utils import has_voted, get_voting, set_vote, get_all_results
 
 
 def index(request):
@@ -23,7 +22,7 @@ def vote(request):
 
 
 def setvote(request):
-    vote_model = set_vote(request.POST['vote'])
+    set_vote(request.POST['vote'])
     voter_model = Voter.objects.get(dni=request.POST['dni'])
     voter_model.has_voted = True
     voter_model.save()

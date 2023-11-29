@@ -36,6 +36,23 @@ class Vote(models.Model):
     white = models.BooleanField(default=False)
     null = models.BooleanField(default=False)
 
+    def __str__(self):
+        if self.party_number:
+            return self.party_number
+        if self.white:
+            return 'En blanco'
+        return 'Nulo'
+
+    class Meta:
+        verbose_name = 'Vote'
+        verbose_name_plural = 'Votes'
+
 
 class Voting(models.Model):
     is_closed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Status: {self.is_closed}'
+
+    class Meta:
+        verbose_name = 'Voting'

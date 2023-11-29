@@ -76,8 +76,6 @@ def get_null_percentage():
 
 def get_all_results():
     parties_models = PoliticalParty.objects.all()
-    voting_model = Voting.objects.get()
-    vote_models = Vote.objects.all()
     white_percentage = get_white_percentage()
     null_percentage = get_null_percentage()
     voted_percentage = has_voted_percentage()

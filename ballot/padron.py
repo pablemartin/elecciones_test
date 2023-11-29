@@ -1,8 +1,10 @@
-from faker import Faker
+import random
 from datetime import date
+
+from faker import Faker
+
 from voting.models import Voter
 
-import random
 
 range_total = list(range(100))
 padron_total = random.shuffle(range_total)
