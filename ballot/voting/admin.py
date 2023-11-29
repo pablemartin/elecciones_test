@@ -5,13 +5,14 @@ from django.urls import path
 from .models import PoliticalParty, Voter, Vote, Voting
 from .utils import get_all_results, get_voting
 
-admin.site.register(Vote)
-
 admin.site.site_header = 'Votacion'
 
 
 @admin.register(Voting, site=admin.site)
 class VotingAdmin(admin.ModelAdmin):
+    list_display = ('is_closed',)
+    list_filter = ('is_closed',)
+
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [path('cierre/', self.cierre)]
@@ -48,3 +49,10 @@ class VoterAdmin(admin.ModelAdmin):
 class PoliticalPartyAdmin(admin.ModelAdmin):
     list_display = ('party_number', 'party_name', 'president', 'vice_president', 'slogan')
     search_fields = ('party_number', 'party_name')
+
+
+@admin.register(Vote)
+class VoteAdmin(admin.ModelAdmin):
+    list_display = ('party_number', 'white', 'null')
+    list_filter = ('party_number', 'white', 'null')
+    search_fields = ('party_number',)
