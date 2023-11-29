@@ -26,24 +26,16 @@ def get_voting():
 
 
 def set_vote(vote):
+    political_party = None
     if vote.isdigit():
-        party_model = vote
-    else:
-        party_model = False
+        party_number = vote
+        political_party = PoliticalParty.objects.get(party_number=party_number)
 
-    if vote == 'white':
-        vote_white = True
-    else:
-        vote_white = False
-
-    if vote == 'null':
-        vote_null = True
-    else:
-        vote_null = False
-
-    vote_model = Vote(party_number=party_model, white=vote_white, null=vote_null)
-
-    vote_model.save()
+    vote_white = vote == 'white'
+    vote_null = vote == 'null'
+    vote_model = Vote.objects.create(
+        political_party=political_party, white=vote_white, null=vote_null
+    )
 
     return vote_model
 
