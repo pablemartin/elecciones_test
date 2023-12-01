@@ -1,24 +1,12 @@
-from faker import Faker
-from datetime import date
-from voting.models import Voter
-
 import random
 
-range_total = list(range(100))
-padron_total = random.shuffle(range_total)
-faker = Faker()
+from voting.tests.factories import VoterFactory
 
-for i in range_total:
-    name = faker.name().split(" ")
-    dni = random.randrange(100000, 10000000)
-    año = random.randrange(1940, 2005)
-    mes = random.randrange(1, 12)
-    dia = random.randrange(1, 30)
-    Voter.objects.create(
-        first_name=name[0],
-        last_name=name[1],
-        dni=dni,
-        birth_date=date(año,mes,dia)
-    )
+possible_dnis = range(100000, 10000000 + 1)
+random_dnis = random.sample(possible_dnis, 100)
 
-print("Padron creado")
+for dni in random_dnis:
+    VoterFactory(dni=dni)
+
+
+print('Padron creado')

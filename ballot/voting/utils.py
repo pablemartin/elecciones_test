@@ -1,5 +1,13 @@
 from .models import Voter, Voting, PoliticalParty, Vote
 
+
+def _get_percentage(partial, total):
+    if total == 0:
+        return 0
+
+    return round((partial / total) * 100, 2)
+
+
 def has_voted(dni):
     try:
         voter = Voter.objects.get(dni=dni)
@@ -7,73 +15,58 @@ def has_voted(dni):
     except Voter.DoesNotExist:
         return None
 
+
 def has_voted_percentage():
     total_voters = Voter.objects.count()
     voted_voters = Voter.objects.filter(has_voted=True).count()
 
-    if total_voters == 0:
-        return 0
+    return _get_percentage(voted_voters, total_voters)
 
-    return round((voted_voters / total_voters) * 100, 2)
 
 def get_voting():
-    return Voting.objects.get_or_create()[0]
+    voting, _ = Voting.objects.get_or_create()
+
+    return voting
+
 
 def set_vote(vote):
+    political_party = None
     if vote.isdigit():
-        party_model = vote
-    else:
-        party_model = False
-    
-    if vote == "white":
-        vote_white = True
-    else:
-        vote_white = False
+        party_number = vote
+        political_party = PoliticalParty.objects.get(party_number=party_number)
 
-    if vote == "null":
-        vote_null = True
-    else:
-        vote_null = False
-
-    vote_model = Vote(
-        party_number=party_model,
-        white=vote_white,
-        null=vote_null
+    vote_white = vote == 'white'
+    vote_null = vote == 'null'
+    vote_model = Vote.objects.create(
+        political_party=political_party, white=vote_white, null=vote_null
     )
-
-    vote_model.save()
 
     return vote_model
 
+
 def get_party_percentage(party):
-    total_votes = Vote.objects.all().count()
-    party_votes = Vote.objects.filter(party_number=party.party_number).count()
+    total_party_votes = Vote.objects.filter(political_party__isnull=False).count()
+    party_votes = Vote.objects.filter(political_party=party).count()
 
-    if party_votes == 0:
-        return 0
+    return _get_percentage(party_votes, total_party_votes)
 
-    return round((party_votes / total_votes) * 100, 2)
 
 def get_white_percentage():
     total_votes = Vote.objects.all().count()
     white_votes = Vote.objects.filter(white=True).count()
-    if white_votes == 0:
-        return 0
-    return round((white_votes / total_votes) * 100, 2)
+
+    return _get_percentage(white_votes, total_votes)
+
 
 def get_null_percentage():
     total_votes = Vote.objects.all().count()
     null_votes = Vote.objects.filter(null=True).count()
 
-    if null_votes == 0:
-        return 0
+    return _get_percentage(null_votes, total_votes)
 
-    return round((null_votes / total_votes) * 100, 2)
 
 def get_all_results():
     parties_models = PoliticalParty.objects.all()
-    voting_model = Voting.objects.get()
-    vote_models = Vote.objects.all()
     white_percentage = get_white_percentage()
     null_percentage = get_null_percentage()
     voted_percentage = has_voted_percentage()
@@ -84,18 +77,16 @@ def get_all_results():
 
     for party in parties_models:
         percentage = get_party_percentage(party)
-        parties_results.update({
-            party.party_name: percentage
-        })
+        parties_results.update({party.party_name: percentage})
         if percentage > winner_percentage:
             winner_percentage = percentage
-            winner_party = party.party_name    
+            winner_party = party.party_name
 
     return {
-        "parties_results": parties_results,
-        "whites": white_percentage,
-        "nulls": null_percentage,
-        "voted_percentage": voted_percentage,
-        "total_voters": total_voters,
-        "winner": winner_party
+        'parties_results': parties_results,
+        'whites': white_percentage,
+        'nulls': null_percentage,
+        'voted_percentage': voted_percentage,
+        'total_voters': total_voters,
+        'winner': winner_party,
     }
